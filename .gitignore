@@ -1,0 +1,55 @@
+# ==========================================
+# TERRAFORM
+# ==========================================
+# Ficheiros de estado (contêm segredos em texto limpo!)
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+# Pastas de plugins e módulos
+.terraform/
+.terraform.lock.hcl
+
+# Variáveis sensíveis (Onde guardas os teus Tokens)
+*.tfvars
+*.tfvars.json
+# Ficheiros de ambiente locais
+.env
+.envrc
+
+# ==========================================
+# SOPS & AGE (CRÍTICO)
+# ==========================================
+key.txt
+keys.txt
+*.age
+sops_internal_keys.txt
+
+# ==========================================
+# KUBERNETES & FERRAMENTAS
+# ==========================================
+# Configurações locais do cluster
+.kube/
+kubeconfig
+kubeconfig.yaml
+
+# Binários descarregados (como o ksops que baixámos)
+ksops
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.tar.gz
+*.zip
+
+# ==========================================
+# SISTEMA & EDITORES
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.bak
+*.tmp
