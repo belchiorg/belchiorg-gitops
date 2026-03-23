@@ -5,13 +5,6 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
-  - secret.enc.yaml # O Argo CD precisará do plugin para ler isto
 
 generators:
   - secret-generator.yaml
-
-patches:
-  - path: patches/kustomization.yaml
-    target:
-      kind: Kustomization
-      name: my-website

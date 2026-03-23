@@ -13,7 +13,7 @@ resource "kubernetes_secret" "sops_age_key" {
   }
 
   data = {
-    "key.txt" = base64encode(trimspace(var.age_private_key))
+    "key.txt" = trimspace(var.age_private_key)
   }
 }
 
@@ -44,7 +44,7 @@ resource "helm_release" "argocd" {
         ]
         volumeMounts = [
           { name = "sops-age-key", mountPath = "/home/argocd/.config/sops/age", readOnly = true },
-          { name = "custom-tools", mountPath = "/usr/local/bin/ksops", subPath = "ksops" }
+          { name = "custom-tools", mountPath = "/home/argocd/.config/kustomize/plugin/viaduct.ai/v1/ksops/ksops", subPath = "ksops" }
         ]
         initContainers = [
           {
