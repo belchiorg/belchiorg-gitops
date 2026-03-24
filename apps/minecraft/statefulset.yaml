@@ -21,6 +21,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: minecraft-config
+          env:
+            - name: RCON_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minecraft-secrets
+                  key: RCON_PASSWORD
           ports:
             - name: minecraft
               containerPort: 25565
@@ -71,7 +77,10 @@ spec:
             - name: RCON_PORT
               value: "25575"
             - name: RCON_PASSWORD
-              value: "backuprcon"
+              valueFrom:
+                secretKeyRef:
+                  name: minecraft-secrets
+                  key: RCON_PASSWORD
           volumeMounts:
             - name: minecraft-data
               mountPath: /data

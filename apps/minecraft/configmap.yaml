@@ -21,5 +21,4 @@ data:
   DIFFICULTY: "normal"
   ONLINE_MODE: "TRUE"
   ENABLE_RCON: "true"
-  RCON_PASSWORD: "backuprcon"
   OVERRIDE_SERVER_PROPERTIES: "TRUE"

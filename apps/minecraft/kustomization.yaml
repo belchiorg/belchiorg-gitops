@@ -6,3 +6,6 @@ resources:
   - configmap.yaml
   - statefulset.yaml
   - service.yaml
+
+generators:
+  - secret-generator.yaml
