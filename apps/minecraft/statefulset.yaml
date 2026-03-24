@@ -42,7 +42,7 @@ spec:
                 - mc-health
             initialDelaySeconds: 60
             periodSeconds: 10
-            timeoutSeconds: 5
+            timeoutSeconds: 15
             failureThreshold: 6
           livenessProbe:
             exec:
@@ -50,7 +50,7 @@ spec:
                 - mc-health
             initialDelaySeconds: 120
             periodSeconds: 10
-            timeoutSeconds: 5
+            timeoutSeconds: 15
             failureThreshold: 3
 
         - name: backup
