@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft
+  namespace: minecraft
+spec:
+  serviceName: minecraft
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: minecraft
+          image: itzg/minecraft-server:latest
+          envFrom:
+            - configMapRef:
+                name: minecraft-config
+          ports:
+            - name: minecraft
+              containerPort: 25565
+              hostPort: 25565
+              protocol: TCP
+          volumeMounts:
+            - name: minecraft-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              cpu: "6"
+              memory: "10Gi"
+          readinessProbe:
+            exec:
+              command:
+                - mc-health
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            exec:
+              command:
+                - mc-health
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            failureThreshold: 3
+
+        - name: backup
+          image: itzg/mc-backup:latest
+          env:
+            - name: BACKUP_INTERVAL
+              value: "2h"
+            - name: BACKUP_METHOD
+              value: tar
+            - name: DEST_DIR
+              value: /backups
+            - name: INITIAL_DELAY
+              value: "2m"
+            - name: PRUNE_BACKUPS_DAYS
+              value: "7"
+            - name: RCON_HOST
+              value: localhost
+            - name: RCON_PORT
+              value: "25575"
+          volumeMounts:
+            - name: minecraft-data
+              mountPath: /data
+              readOnly: true
+            - name: minecraft-backups
+              mountPath: /backups
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+  volumeClaimTemplates:
+    - metadata:
+        name: minecraft-data
+      spec:
+        storageClassName: local-path
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+    - metadata:
+        name: minecraft-backups
+      spec:
+        storageClassName: local-path
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 30Gi

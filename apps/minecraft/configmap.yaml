@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minecraft-config
+  namespace: minecraft
+data:
+  EULA: "TRUE"
+  TYPE: "MODRINTH"
+  # Fill in your Modrinth modpack slug, e.g. "fabulously-optimized"
+  # Find it at https://modrinth.com/<slug>
+  MODRINTH_MODPACK: "aged"
+  # Set to match the modpack's target Minecraft version
+  VERSION: "1.20.1"
+  # Pin to a specific modpack version to prevent unexpected updates on pod restart
+  # Set to "latest" to always use the latest release
+  MODRINTH_MODPACK_VERSION: "latest"
+  MEMORY: "8G"
+  JVM_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200"
+  MOTD: "A Minecraft Server"
+  MAX_PLAYERS: "10"
+  DIFFICULTY: "normal"
+  ONLINE_MODE: "TRUE"
+  ENABLE_RCON: "false"
+  OVERRIDE_SERVER_PROPERTIES: "TRUE"

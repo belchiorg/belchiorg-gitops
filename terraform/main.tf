@@ -37,6 +37,22 @@ resource "hcloud_firewall" "k8s_firewall" {
     port      = "6443"
     source_ips = ["195.23.0.0/16"]
   }
+
+  # minecraft from anywhere (IPv4)
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "25565"
+    source_ips = ["0.0.0.0/0"]
+  }
+
+  # minecraft from anywhere (IPv6)
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "25565"
+    source_ips = ["::/0"]
+  }
 }
 
 # apply the firewall to the server
@@ -46,6 +62,14 @@ resource "hcloud_firewall_attachment" "main" {
 }
 
 # create a record for the root domain
+resource "cloudflare_record" "minecraft" {
+  zone_id = var.cloudflare_zone_id
+  name    = "mc"
+  value   = hcloud_server.master_node.ipv4_address
+  type    = "A"
+  proxied = false # Cloudflare cannot proxy raw TCP game traffic
+}
+
 resource "cloudflare_record" "root" {
   zone_id = var.cloudflare_zone_id
   name    = "@"
