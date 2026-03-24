@@ -20,5 +20,6 @@ data:
   MAX_PLAYERS: "10"
   DIFFICULTY: "normal"
   ONLINE_MODE: "TRUE"
-  ENABLE_RCON: "false"
+  ENABLE_RCON: "true"
+  RCON_PASSWORD: "backuprcon"
   OVERRIDE_SERVER_PROPERTIES: "TRUE"
