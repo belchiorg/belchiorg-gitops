@@ -42,6 +42,7 @@ spec:
                 - mc-health
             initialDelaySeconds: 60
             periodSeconds: 10
+            timeoutSeconds: 5
             failureThreshold: 6
           livenessProbe:
             exec:
@@ -49,6 +50,7 @@ spec:
                 - mc-health
             initialDelaySeconds: 120
             periodSeconds: 10
+            timeoutSeconds: 5
             failureThreshold: 3
 
         - name: backup
@@ -64,6 +66,8 @@ spec:
               value: "2m"
             - name: PRUNE_BACKUPS_DAYS
               value: "7"
+            - name: SKIP_COMMANDS
+              value: "true"
           volumeMounts:
             - name: minecraft-data
               mountPath: /data
