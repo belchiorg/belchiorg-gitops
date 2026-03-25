@@ -15,6 +15,13 @@ spec:
         app: minecraft
     spec:
       terminationGracePeriodSeconds: 60
+      initContainers:
+        - name: remove-incompatible-mods
+          image: busybox
+          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar && echo 'Removed incompatible client-only mods'"]
+          volumeMounts:
+            - name: minecraft-data
+              mountPath: /data
       containers:
         - name: minecraft
           image: itzg/minecraft-server:java17
