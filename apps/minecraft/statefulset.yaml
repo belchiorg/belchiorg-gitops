@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: remove-incompatible-mods
           image: busybox
-          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar && echo 'Removed incompatible client-only mods'"]
+          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar && if [ -f /data/.modrinth-modpack-manifest.json ]; then sed -i 's|,\"mods/poses-[^\"]*\"||g;s|\"mods/poses-[^\"]*\",||g' /data/.modrinth-modpack-manifest.json; fi && echo 'Removed incompatible client-only mods'"]
           volumeMounts:
             - name: minecraft-data
               mountPath: /data
