@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: remove-incompatible-mods
           image: busybox
-          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar /data/.modrinth-modpack-manifest.json && echo 'Removed incompatible mods and manifest so itzg re-downloads with exclusions'"]
+          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar /data/.modrinth-modpack-manifest.json /data/.install-modrinth.env && echo 'Removed poses mod and install markers so itzg re-downloads with exclusions'"]
           volumeMounts:
             - name: minecraft-data
               mountPath: /data
