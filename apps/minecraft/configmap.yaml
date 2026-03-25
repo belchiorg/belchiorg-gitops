@@ -9,11 +9,8 @@ data:
   # Fill in your Modrinth modpack slug, e.g. "fabulously-optimized"
   # Find it at https://modrinth.com/<slug>
   MODRINTH_MODPACK: "vanilla-perfected"
-  # Set to match the modpack's target Minecraft version
-  VERSION: "1.21.1"
-  # Pin to a specific modpack version to prevent unexpected updates on pod restart
-  # Set to "latest" to always use the latest release
-  MODRINTH_MODPACK_VERSION: "latest"
+  VERSION: "1.21.11"
+  MODRINTH_MODPACK_VERSION: "1.0.1+1.21.11"
   MODRINTH_EXCLUDE_INCOMPATIBLE_MODS: "true"
   MODRINTH_EXCLUDE_FILES: "poses"
   MODRINTH_FORCE_SYNCHRONIZE: "true"
