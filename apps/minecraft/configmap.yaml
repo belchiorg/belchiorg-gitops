@@ -10,7 +10,7 @@ data:
   # Find it at https://modrinth.com/<slug>
   MODRINTH_MODPACK: "vanilla-perfected"
   # Set to match the modpack's target Minecraft version
-  VERSION: "1.20.1"
+  VERSION: "1.21.1"
   # Pin to a specific modpack version to prevent unexpected updates on pod restart
   # Set to "latest" to always use the latest release
   MODRINTH_MODPACK_VERSION: "latest"
