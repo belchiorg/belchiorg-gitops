@@ -15,8 +15,8 @@ data:
   # Set to "latest" to always use the latest release
   MODRINTH_MODPACK_VERSION: "latest"
   MODRINTH_EXCLUDE_INCOMPATIBLE_MODS: "true"
-  MODRINTH_EXCLUDE_MODS: "armor-stand-poses"
-  MODRINTH_EXCLUDE_FILES: "poses-*"
+  MODRINTH_EXCLUDE_FILES: "poses"
+  MODRINTH_FORCE_SYNCHRONIZE: "true"
   MEMORY: "8G"
   JVM_OPTS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200"
   MOTD: "A Minecraft Server"
