@@ -24,7 +24,7 @@ spec:
               mountPath: /data
       containers:
         - name: minecraft
-          image: itzg/minecraft-server:java17
+          image: itzg/minecraft-server:java21
           envFrom:
             - configMapRef:
                 name: minecraft-config
