@@ -18,7 +18,7 @@ spec:
       initContainers:
         - name: remove-incompatible-mods
           image: busybox
-          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar /data/.install-modrinth.env /data/.modrinth-modpack-manifest.json && echo 'Cleared poses mod and install markers'"]
+          command: ["sh", "-c", "rm -f /data/mods/poses-*.jar /data/mods/simple-datapacks-*.jar /data/.install-modrinth.env /data/.modrinth-modpack-manifest.json && echo 'Cleared incompatible mods and install markers'"]
           volumeMounts:
             - name: minecraft-data
               mountPath: /data
