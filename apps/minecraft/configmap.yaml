@@ -8,7 +8,7 @@ data:
   TYPE: "MODRINTH"
   # Fill in your Modrinth modpack slug, e.g. "fabulously-optimized"
   # Find it at https://modrinth.com/<slug>
-  MODRINTH_MODPACK: "better-mc-fabric-bmc2"
+  MODRINTH_MODPACK: "vanilla-perfected"
   # Set to match the modpack's target Minecraft version
   VERSION: "1.20.1"
   # Pin to a specific modpack version to prevent unexpected updates on pod restart
