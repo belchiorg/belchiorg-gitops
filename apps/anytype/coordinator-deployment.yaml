@@ -60,7 +60,7 @@ spec:
       - name: bootstrap
         image: ghcr.io/anyproto/any-sync-coordinator:latest
         command:
-        - /bin/any-sync-confapply
+        - /usr/bin/any-sync-confapply
         - -c
         - /etc/any-sync-coordinator/config.yml
         - -n
@@ -73,7 +73,7 @@ spec:
       - name: coordinator
         image: ghcr.io/anyproto/any-sync-coordinator:latest
         command:
-        - /bin/any-sync-coordinator
+        - /usr/bin/any-sync-coordinator
         args:
         - "-c"
         - "/etc/any-sync-coordinator/config.yml"
