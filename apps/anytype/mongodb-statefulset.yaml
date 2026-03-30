@@ -15,6 +15,26 @@ spec:
         app: mongodb
     spec:
       terminationGracePeriodSeconds: 30
+      initContainers:
+      - name: generate-keyfile
+        image: mongo:7.0
+        command:
+        - /bin/bash
+        - -c
+        - |
+          # Derive a deterministic keyfile from the password so it survives pod restarts
+          printf '%s' "$MONGO_INITDB_ROOT_PASSWORD" | openssl dgst -sha256 -binary | base64 -w0 > /keyfile/keyfile
+          chmod 400 /keyfile/keyfile
+          chown 999:999 /keyfile/keyfile
+        env:
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MONGO_PASSWORD
+        volumeMounts:
+        - name: keyfile
+          mountPath: /keyfile
       containers:
       - name: mongodb
         image: mongo:7.0
@@ -22,6 +42,8 @@ spec:
         - --replSet
         - rs0
         - --bind_ip_all
+        - --keyFile
+        - /etc/mongodb/keyfile
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           value: root
@@ -79,6 +101,12 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data/db
+        - name: keyfile
+          mountPath: /etc/mongodb
+          readOnly: true
+      volumes:
+      - name: keyfile
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: data

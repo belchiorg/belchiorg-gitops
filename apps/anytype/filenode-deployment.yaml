@@ -14,7 +14,6 @@ spec:
         app: filenode
     spec:
       initContainers:
-      # Create the MinIO bucket before starting the filenode
       - name: create-bucket
         image: minio/mc:latest
         command:
@@ -40,6 +39,7 @@ spec:
       containers:
       - name: filenode
         image: ghcr.io/anyproto/any-sync-filenode:latest
+        command: ["/bin/any-sync-filenode"]
         ports:
         - name: drpc-tcp
           containerPort: 33012
@@ -58,7 +58,7 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /code/etc/any-sync-filenode.yml
+          mountPath: /etc/any-sync-filenode/config.yml
           subPath: any-sync-filenode.yml
           readOnly: true
       volumes:

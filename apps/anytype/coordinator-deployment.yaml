@@ -16,6 +16,7 @@ spec:
       containers:
       - name: coordinator
         image: ghcr.io/anyproto/any-sync-coordinator:latest
+        command: ["/bin/any-sync-coordinator"]
         ports:
         - name: drpc-tcp
           containerPort: 33010
@@ -34,7 +35,7 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /code/etc/any-sync-coordinator.yml
+          mountPath: /etc/any-sync-coordinator/config.yml
           subPath: any-sync-coordinator.yml
           readOnly: true
       volumes:
