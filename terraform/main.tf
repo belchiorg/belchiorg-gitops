@@ -38,12 +38,19 @@ resource "hcloud_firewall" "k8s_firewall" {
     source_ips = ["195.23.0.0/16"]
   }
 
-  # anytype sync (coordinator, node, filenode, consensusnode) — TCP
+  # anytype sync (coordinator:33010, node:33011, filenode:33012, consensusnode:33013) — TCP
   rule {
     direction  = "in"
     protocol   = "tcp"
     port       = "33010-33013"
-    source_ips = ["0.0.0.0/0", "::/0"]
+    source_ips = ["0.0.0.0/0"]
+  }
+
+  rule {
+    direction  = "in"
+    protocol   = "tcp"
+    port       = "33010-33013"
+    source_ips = ["::/0"]
   }
 
   # anytype sync — UDP (QUIC transport)
@@ -51,7 +58,14 @@ resource "hcloud_firewall" "k8s_firewall" {
     direction  = "in"
     protocol   = "udp"
     port       = "33020-33023"
-    source_ips = ["0.0.0.0/0", "::/0"]
+    source_ips = ["0.0.0.0/0"]
+  }
+
+  rule {
+    direction  = "in"
+    protocol   = "udp"
+    port       = "33020-33023"
+    source_ips = ["::/0"]
   }
 
 }
