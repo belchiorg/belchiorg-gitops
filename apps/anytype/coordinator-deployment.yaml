@@ -72,6 +72,8 @@ spec:
       containers:
       - name: coordinator
         image: ghcr.io/anyproto/any-sync-coordinator:latest
+        command:
+        - /bin/any-sync-coordinator
         args:
         - "-c"
         - "/etc/any-sync-coordinator/config.yml"
