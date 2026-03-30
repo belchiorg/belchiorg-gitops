@@ -13,10 +13,23 @@ spec:
       labels:
         app: coordinator
     spec:
+      initContainers:
+      # Bootstrap: applies network config to MongoDB (equivalent to any-sync-coordinator_bootstrap in docker-compose)
+      - name: bootstrap
+        image: ghcr.io/anyproto/any-sync-coordinator:latest
+        command:
+        - /bin/any-sync-confapply
+        - -c
+        - /etc/any-sync-coordinator/config.yml
+        - -n
+        - /etc/any-sync-coordinator/network.yml
+        - -e
+        volumeMounts:
+        - name: config
+          mountPath: /etc/any-sync-coordinator
       containers:
       - name: coordinator
         image: ghcr.io/anyproto/any-sync-coordinator:latest
-        command: ["/bin/any-sync-coordinator"]
         ports:
         - name: drpc-tcp
           containerPort: 33010
@@ -35,13 +48,13 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /etc/any-sync-coordinator/config.yml
-          subPath: any-sync-coordinator.yml
-          readOnly: true
+          mountPath: /etc/any-sync-coordinator
       volumes:
       - name: config
         secret:
           secretName: anytype-configs
           items:
           - key: any-sync-coordinator.yml
-            path: any-sync-coordinator.yml
+            path: config.yml
+          - key: any-sync-coordinator-network.yml
+            path: network.yml

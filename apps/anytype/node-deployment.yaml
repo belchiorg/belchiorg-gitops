@@ -16,7 +16,6 @@ spec:
       containers:
       - name: node
         image: ghcr.io/anyproto/any-sync-node:latest
-        command: ["/bin/any-sync-node"]
         ports:
         - name: drpc-tcp
           containerPort: 33011
@@ -35,9 +34,7 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /etc/any-sync-node/config.yml
-          subPath: any-sync-node.yml
-          readOnly: true
+          mountPath: /etc/any-sync-node
         - name: storage
           mountPath: /storage
       volumes:
@@ -46,7 +43,7 @@ spec:
           secretName: anytype-configs
           items:
           - key: any-sync-node.yml
-            path: any-sync-node.yml
+            path: config.yml
       - name: storage
         persistentVolumeClaim:
           claimName: node-storage

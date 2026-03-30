@@ -39,7 +39,6 @@ spec:
       containers:
       - name: filenode
         image: ghcr.io/anyproto/any-sync-filenode:latest
-        command: ["/bin/any-sync-filenode"]
         ports:
         - name: drpc-tcp
           containerPort: 33012
@@ -58,13 +57,11 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /etc/any-sync-filenode/config.yml
-          subPath: any-sync-filenode.yml
-          readOnly: true
+          mountPath: /etc/any-sync-filenode
       volumes:
       - name: config
         secret:
           secretName: anytype-configs
           items:
           - key: any-sync-filenode.yml
-            path: any-sync-filenode.yml
+            path: config.yml

@@ -16,7 +16,6 @@ spec:
       containers:
       - name: consensusnode
         image: ghcr.io/anyproto/any-sync-consensusnode:latest
-        command: ["/bin/any-sync-consensusnode"]
         ports:
         - name: drpc-tcp
           containerPort: 33013
@@ -35,13 +34,11 @@ spec:
             memory: 256Mi
         volumeMounts:
         - name: config
-          mountPath: /etc/any-sync-consensusnode/config.yml
-          subPath: any-sync-consensusnode.yml
-          readOnly: true
+          mountPath: /etc/any-sync-consensusnode
       volumes:
       - name: config
         secret:
           secretName: anytype-configs
           items:
           - key: any-sync-consensusnode.yml
-            path: any-sync-consensusnode.yml
+            path: config.yml
