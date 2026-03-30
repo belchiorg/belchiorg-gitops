@@ -39,6 +39,9 @@ spec:
       containers:
       - name: filenode
         image: ghcr.io/anyproto/any-sync-filenode:latest
+        args:
+        - "-c"
+        - "/etc/any-sync-filenode/config.yml"
         ports:
         - name: drpc-tcp
           containerPort: 33012

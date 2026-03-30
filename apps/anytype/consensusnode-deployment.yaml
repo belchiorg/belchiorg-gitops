@@ -16,6 +16,9 @@ spec:
       containers:
       - name: consensusnode
         image: ghcr.io/anyproto/any-sync-consensusnode:latest
+        args:
+        - "-c"
+        - "/etc/any-sync-consensusnode/config.yml"
         ports:
         - name: drpc-tcp
           containerPort: 33013

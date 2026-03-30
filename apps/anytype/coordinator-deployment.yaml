@@ -30,6 +30,9 @@ spec:
       containers:
       - name: coordinator
         image: ghcr.io/anyproto/any-sync-coordinator:latest
+        args:
+        - "-c"
+        - "/etc/any-sync-coordinator/config.yml"
         ports:
         - name: drpc-tcp
           containerPort: 33010

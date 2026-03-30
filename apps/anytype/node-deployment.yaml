@@ -16,6 +16,9 @@ spec:
       containers:
       - name: node
         image: ghcr.io/anyproto/any-sync-node:latest
+        args:
+        - "-c"
+        - "/etc/any-sync-node/config.yml"
         ports:
         - name: drpc-tcp
           containerPort: 33011
