@@ -14,6 +14,27 @@ spec:
         app: coordinator
     spec:
       initContainers:
+      # Wait for MongoDB replica set to have a primary before running confapply
+      - name: wait-for-mongodb
+        image: mongo:7.0
+        command:
+        - /bin/bash
+        - -c
+        - |
+          until mongosh --host mongodb-0.mongodb:27017 \
+            -u root -p "$MONGO_PASSWORD" \
+            --authenticationDatabase admin \
+            --eval "rs.isMaster().ismaster" --quiet 2>/dev/null | grep -q "true"; do
+            echo "Waiting for MongoDB primary..."
+            sleep 5
+          done
+          echo "MongoDB primary is ready."
+        env:
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MONGO_PASSWORD
       # Bootstrap: applies network config to MongoDB (equivalent to any-sync-coordinator_bootstrap in docker-compose)
       - name: bootstrap
         image: ghcr.io/anyproto/any-sync-coordinator:latest
