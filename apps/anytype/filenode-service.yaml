@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: filenode
+  namespace: anytype
+spec:
+  selector:
+    app: filenode
+  ports:
+  - name: drpc
+    port: 33012
+    targetPort: 33012

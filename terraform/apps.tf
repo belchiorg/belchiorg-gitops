@@ -1,9 +1,9 @@
-resource "kubernetes_manifest" "minecraft_app" {
+resource "kubernetes_manifest" "anytype_app" {
   manifest = {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind"       = "Application"
     "metadata" = {
-      "name"      = "minecraft"
+      "name"      = "anytype"
       "namespace" = "argocd"
     }
     "spec" = {
@@ -11,11 +11,11 @@ resource "kubernetes_manifest" "minecraft_app" {
       "source" = {
         "repoURL"        = "https://github.com/belchiorg/belchiorg-gitops.git"
         "targetRevision" = "HEAD"
-        "path"           = "apps/minecraft"
+        "path"           = "apps/anytype"
       }
       "destination" = {
         "server"    = "https://kubernetes.default.svc"
-        "namespace" = "minecraft"
+        "namespace" = "anytype"
       }
       "syncPolicy" = {
         "automated" = {

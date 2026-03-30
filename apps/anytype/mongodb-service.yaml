@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: anytype
+spec:
+  clusterIP: None  # headless — gives stable DNS: mongodb-0.mongodb.anytype.svc.cluster.local
+  selector:
+    app: mongodb
+  ports:
+  - port: 27017
+    targetPort: 27017

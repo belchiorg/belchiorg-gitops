@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filenode
+  namespace: anytype
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filenode
+  template:
+    metadata:
+      labels:
+        app: filenode
+    spec:
+      initContainers:
+      # Create the MinIO bucket before starting the filenode
+      - name: create-bucket
+        image: minio/mc:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          until mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" 2>/dev/null; do
+            echo "Waiting for MinIO..."
+            sleep 3
+          done
+          mc mb --ignore-existing local/anytype
+        env:
+        - name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MINIO_ACCESS_KEY
+        - name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MINIO_SECRET_KEY
+      containers:
+      - name: filenode
+        image: ghcr.io/anyproto/any-sync-filenode:latest
+        ports:
+        - name: drpc-tcp
+          containerPort: 33012
+          hostPort: 33012
+          protocol: TCP
+        - name: drpc-udp
+          containerPort: 33022
+          hostPort: 33022
+          protocol: UDP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: config
+          mountPath: /code/etc/any-sync-filenode.yml
+          subPath: any-sync-filenode.yml
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: anytype-configs
+          items:
+          - key: any-sync-filenode.yml
+            path: any-sync-filenode.yml

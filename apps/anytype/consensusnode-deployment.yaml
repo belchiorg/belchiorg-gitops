@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consensusnode
+  namespace: anytype
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consensusnode
+  template:
+    metadata:
+      labels:
+        app: consensusnode
+    spec:
+      containers:
+      - name: consensusnode
+        image: ghcr.io/anyproto/any-sync-consensusnode:latest
+        ports:
+        - name: drpc-tcp
+          containerPort: 33013
+          hostPort: 33013
+          protocol: TCP
+        - name: drpc-udp
+          containerPort: 33023
+          hostPort: 33023
+          protocol: UDP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: config
+          mountPath: /code/etc/any-sync-consensusnode.yml
+          subPath: any-sync-consensusnode.yml
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: anytype-configs
+          items:
+          - key: any-sync-consensusnode.yml
+            path: any-sync-consensusnode.yml

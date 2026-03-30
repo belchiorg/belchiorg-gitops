@@ -1,0 +1,74 @@
+# This ConfigMap holds client.yml — the network config you upload to the Anytype desktop app
+# (Settings → Self-hosted → upload this file).
+# Content comes from ./etc/client.yml after running `make generate` in any-sync-dockercompose.
+# It contains no private keys, so it's safe in a ConfigMap.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: anytype-client-config
+  namespace: anytype
+data:
+  client.yml: |
+    id: 69caa784c8e6dd001601844c
+    networkId: N4Uy6d84nJ1o99vgpZrsmsaGA7pkHNVfcB12uVawnPtTJmhi
+    nodes:
+      - addresses:
+          - any-sync-node-1:1001
+          - quic://any-sync-node-1:1011
+          - anytype.guilhermebelchior.com:1001
+          - quic://anytype.guilhermebelchior.com:1011
+          - 127.0.0.1:1001
+          - quic://127.0.0.1:1011
+        peerId: 12D3KooWAJ9DgYU98hszEVEvUsoEcb6WCLiXHmuFSS4JNQmfgz7h
+        types:
+          - tree
+      - addresses:
+          - any-sync-node-2:1002
+          - quic://any-sync-node-2:1012
+          - anytype.guilhermebelchior.com:1002
+          - quic://anytype.guilhermebelchior.com:1012
+          - 127.0.0.1:1002
+          - quic://127.0.0.1:1012
+        peerId: 12D3KooWBNm6sRm4tqH5vaUANNL8sxyrZEPL3jTNyXEzgmSey7Qz
+        types:
+          - tree
+      - addresses:
+          - any-sync-node-3:1003
+          - quic://any-sync-node-3:1013
+          - anytype.guilhermebelchior.com:1003
+          - quic://anytype.guilhermebelchior.com:1013
+          - 127.0.0.1:1003
+          - quic://127.0.0.1:1013
+        peerId: 12D3KooWQQ7X9qs73ZfwXjs8fL1FfHbeJ4vHE8f88WWC1M372PTY
+        types:
+          - tree
+      - addresses:
+          - any-sync-coordinator:1004
+          - quic://any-sync-coordinator:1014
+          - anytype.guilhermebelchior.com:1004
+          - quic://anytype.guilhermebelchior.com:1014
+          - 127.0.0.1:1004
+          - quic://127.0.0.1:1014
+        peerId: 12D3KooWHDj143rfT9dNdmGN4FqdZ7Aysn6bNUVpLKs5Uvcn3cgA
+        types:
+          - coordinator
+      - addresses:
+          - any-sync-filenode:1005
+          - quic://any-sync-filenode:1015
+          - anytype.guilhermebelchior.com:1005
+          - quic://anytype.guilhermebelchior.com:1015
+          - 127.0.0.1:1005
+          - quic://127.0.0.1:1015
+        peerId: 12D3KooWRprFVLdQCaeCpwsU8dwRpSYhoexZD627RZJmBBhBj6Uh
+        types:
+          - file
+      - addresses:
+          - any-sync-consensusnode:1006
+          - quic://any-sync-consensusnode:1016
+          - anytype.guilhermebelchior.com:1006
+          - quic://anytype.guilhermebelchior.com:1016
+          - 127.0.0.1:1006
+          - quic://127.0.0.1:1016
+        peerId: 12D3KooWQjab9yHk7gNqu9mHz89xvExuaxdoY4yQ7ra7VrLZoj1H
+        types:
+          - consensus

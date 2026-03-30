@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coordinator
+  namespace: anytype
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coordinator
+  template:
+    metadata:
+      labels:
+        app: coordinator
+    spec:
+      containers:
+      - name: coordinator
+        image: ghcr.io/anyproto/any-sync-coordinator:latest
+        ports:
+        - name: drpc-tcp
+          containerPort: 33010
+          hostPort: 33010
+          protocol: TCP
+        - name: drpc-udp
+          containerPort: 33020
+          hostPort: 33020
+          protocol: UDP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: config
+          mountPath: /code/etc/any-sync-coordinator.yml
+          subPath: any-sync-coordinator.yml
+          readOnly: true
+      volumes:
+      - name: config
+        secret:
+          secretName: anytype-configs
+          items:
+          - key: any-sync-coordinator.yml
+            path: any-sync-coordinator.yml

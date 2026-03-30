@@ -24,6 +24,8 @@ key.txt
 keys.txt
 *.age
 sops_internal_keys.txt
+**/secret.yaml
+apps/anytype/secret.yaml
 
 # ==========================================
 # KUBERNETES & FERRAMENTAS
@@ -46,10 +48,15 @@ ksops
 # ==========================================
 # SISTEMA & EDITORES
 # ==========================================
-.DS_Store
+DS_Store
 Thumbs.db
 .vscode/
 .idea/
 *.swp
 *.bak
 *.tmp
+
+# ==========================================
+# Ignore my things uwu
+# ==========================================
+.ignore/

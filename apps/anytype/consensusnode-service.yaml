@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: consensusnode
+  namespace: anytype
+spec:
+  selector:
+    app: consensusnode
+  ports:
+  - name: drpc
+    port: 33013
+    targetPort: 33013

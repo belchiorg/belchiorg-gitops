@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - mongodb-statefulset.yaml
+  - mongodb-service.yaml
+  - redis-pvc.yaml
+  - redis-deployment.yaml
+  - redis-service.yaml
+  - minio-pvc.yaml
+  - minio-deployment.yaml
+  - minio-service.yaml
+  - node-pvc.yaml
+  - coordinator-deployment.yaml
+  - coordinator-service.yaml
+  - consensusnode-deployment.yaml
+  - consensusnode-service.yaml
+  - node-deployment.yaml
+  - node-service.yaml
+  - filenode-deployment.yaml
+  - filenode-service.yaml
+  - configmap-client.yaml
+
+generators:
+  - secret-generator.yaml

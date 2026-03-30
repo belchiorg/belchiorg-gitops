@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node
+  namespace: anytype
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: node
+        image: ghcr.io/anyproto/any-sync-node:latest
+        ports:
+        - name: drpc-tcp
+          containerPort: 33011
+          hostPort: 33011
+          protocol: TCP
+        - name: drpc-udp
+          containerPort: 33021
+          hostPort: 33021
+          protocol: UDP
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        volumeMounts:
+        - name: config
+          mountPath: /code/etc/any-sync-node.yml
+          subPath: any-sync-node.yml
+          readOnly: true
+        - name: storage
+          mountPath: /storage
+      volumes:
+      - name: config
+        secret:
+          secretName: anytype-configs
+          items:
+          - key: any-sync-node.yml
+            path: any-sync-node.yml
+      - name: storage
+        persistentVolumeClaim:
+          claimName: node-storage
