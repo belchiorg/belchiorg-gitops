@@ -35,8 +35,9 @@ spec:
             --authenticationDatabase admin \
             --eval "
               try {
-                var s = rs.status();
+                rs.status();
               } catch(e) {
+                print('Initiating replica set...');
                 rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'mongodb-0.mongodb:27017'}]});
               }
             " --quiet 2>/dev/null || true
@@ -44,8 +45,8 @@ spec:
           until mongosh --host mongodb-0.mongodb:27017 \
             -u root -p "$MONGO_PASSWORD" \
             --authenticationDatabase admin \
-            --eval "rs.isMaster().ismaster" --quiet 2>/dev/null | grep -q "true"; do
-            echo "Waiting for MongoDB primary..."
+            --eval "print(db.hello().isWritablePrimary)" --quiet 2>/dev/null | grep -q "true"; do
+            echo "Waiting for MongoDB primary... (current: $(mongosh --host mongodb-0.mongodb:27017 -u root -p "$MONGO_PASSWORD" --authenticationDatabase admin --eval "try { print(rs.status().myState) } catch(e) { print('no-rs') }" --quiet 2>/dev/null))"
             sleep 3
           done
           echo "MongoDB primary is ready."
