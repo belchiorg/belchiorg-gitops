@@ -21,12 +21,32 @@ spec:
         - /bin/bash
         - -c
         - |
+          # Wait for MongoDB to accept connections
+          until mongosh --host mongodb-0.mongodb:27017 \
+            -u root -p "$MONGO_PASSWORD" \
+            --authenticationDatabase admin \
+            --eval "db.adminCommand('ping')" --quiet 2>/dev/null; do
+            echo "Waiting for MongoDB..."
+            sleep 3
+          done
+          # Initiate replica set if not already done
+          mongosh --host mongodb-0.mongodb:27017 \
+            -u root -p "$MONGO_PASSWORD" \
+            --authenticationDatabase admin \
+            --eval "
+              try {
+                var s = rs.status();
+              } catch(e) {
+                rs.initiate({_id: 'rs0', members: [{_id: 0, host: 'mongodb-0.mongodb:27017'}]});
+              }
+            " --quiet 2>/dev/null || true
+          # Wait for primary
           until mongosh --host mongodb-0.mongodb:27017 \
             -u root -p "$MONGO_PASSWORD" \
             --authenticationDatabase admin \
             --eval "rs.isMaster().ismaster" --quiet 2>/dev/null | grep -q "true"; do
             echo "Waiting for MongoDB primary..."
-            sleep 5
+            sleep 3
           done
           echo "MongoDB primary is ready."
         env:
