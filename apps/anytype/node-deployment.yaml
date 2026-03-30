@@ -16,6 +16,8 @@ spec:
       containers:
       - name: node
         image: ghcr.io/anyproto/any-sync-node:latest
+        command:
+        - /usr/bin/any-sync-node
         args:
         - "-c"
         - "/etc/any-sync-node/config.yml"

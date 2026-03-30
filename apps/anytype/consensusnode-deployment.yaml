@@ -16,6 +16,8 @@ spec:
       containers:
       - name: consensusnode
         image: ghcr.io/anyproto/any-sync-consensusnode:latest
+        command:
+        - /usr/bin/any-sync-consensusnode
         args:
         - "-c"
         - "/etc/any-sync-consensusnode/config.yml"
