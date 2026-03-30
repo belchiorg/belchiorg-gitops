@@ -46,6 +46,17 @@ spec:
         args:
         - "-c"
         - "/etc/any-sync-filenode/config.yml"
+        env:
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MINIO_ACCESS_KEY
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: anytype-configs
+              key: MINIO_SECRET_KEY
         ports:
         - name: drpc-tcp
           containerPort: 33012
