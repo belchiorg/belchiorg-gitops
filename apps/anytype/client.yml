@@ -1,0 +1,23 @@
+id: 69caaeecc8e6dd001699e538
+networkId: N53XakY8pX41KZH4pd92dJP6rx1wrfsTcSHi5okrS7r2J6AU
+nodes:
+  - peerId: 12D3KooWKWp5LdzczjEZJaz4bUGMVQRzWK7qcWwtrmUUDkRYdwX3
+    addresses:
+      - anytype.guilhermebelchior.com:33011        # Sync Node TCP
+      - quic://anytype.guilhermebelchior.com:33021 # Sync Node UDP
+    types: ["tree"]
+  - peerId: 12D3KooWSzpAvbUKEJzFBp7kMbHVdcg9mnj1c2kWTZs5KCY6hmBn
+    addresses:
+      - anytype.guilhermebelchior.com:33010        # Coordinator TCP
+      - quic://anytype.guilhermebelchior.com:33020 # Coordinator UDP
+    types: ["coordinator"]
+  - peerId: 12D3KooWQSPga11YBdewNVy7XTpUBw4cg35DJ3zyrCm6ruL9RvGJ
+    addresses:
+      - anytype.guilhermebelchior.com:33012        # FileNode TCP
+      - quic://anytype.guilhermebelchior.com:33022 # FileNode UDP
+    types: ["file"]
+  - peerId: 12D3KooWNn4277RHAoMWF1Lskm6QUC93mQjZGTUGfWecpMGAKNky
+    addresses:
+      - anytype.guilhermebelchior.com:33013        # Consensus TCP
+      - quic://anytype.guilhermebelchior.com:33023 # Consensus UDP
+    types: ["consensus"]
