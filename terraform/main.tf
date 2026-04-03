@@ -84,6 +84,14 @@ resource "cloudflare_record" "anytype" {
   proxied = false # raw TCP/UDP — Cloudflare cannot proxy this traffic
 }
 
+resource "cloudflare_record" "stremio" {
+  zone_id = var.cloudflare_zone_id
+  name    = "stremio"
+  value   = hcloud_server.master_node.ipv4_address
+  type    = "A"
+  proxied = true
+}
+
 resource "cloudflare_record" "root" {
   zone_id = var.cloudflare_zone_id
   name    = "@"

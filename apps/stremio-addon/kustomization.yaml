@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - jackett-pvc.yaml
+  - jackett-deployment.yaml
+  - jackett-service.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+
+# generators:
+#   - secret-generator.yaml  # uncomment once secret.enc.yaml is created

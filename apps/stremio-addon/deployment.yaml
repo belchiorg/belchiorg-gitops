@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stremio-addon
+  namespace: stremio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stremio-addon
+  template:
+    metadata:
+      labels:
+        app: stremio-addon
+    spec:
+      containers:
+      - name: addon
+        image: ghcr.io/belchiorg/stremio-addon:latest
+        ports:
+        - containerPort: 7000
+        env:
+        - name: PORT
+          value: "7000"
+        - name: JACKETT_URL
+          value: "http://jackett:9117"
+        - name: JACKETT_API_KEY
+          value: ""  # TODO: replace with secretKeyRef once secret.enc.yaml is created
+        - name: OMDB_API_KEY
+          value: ""  # TODO: replace with secretKeyRef once secret.enc.yaml is created
