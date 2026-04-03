@@ -10,5 +10,5 @@ resources:
   - service.yaml
   - ingress.yaml
 
-# generators:
-#   - secret-generator.yaml  # uncomment once secret.enc.yaml is created
+generators:
+  - secret-generator.yaml

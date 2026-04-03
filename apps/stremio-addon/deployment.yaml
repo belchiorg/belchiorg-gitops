@@ -24,6 +24,12 @@ spec:
         - name: JACKETT_URL
           value: "http://jackett:9117"
         - name: JACKETT_API_KEY
-          value: ""  # TODO: replace with secretKeyRef once secret.enc.yaml is created
+          valueFrom:
+            secretKeyRef:
+              name: stremio-secrets
+              key: jackett-api-key
         - name: OMDB_API_KEY
-          value: ""  # TODO: replace with secretKeyRef once secret.enc.yaml is created
+          valueFrom:
+            secretKeyRef:
+              name: stremio-secrets
+              key: omdb-api-key
