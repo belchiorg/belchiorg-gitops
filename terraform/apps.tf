@@ -30,12 +30,12 @@ resource "kubernetes_manifest" "anytype_app" {
   }
 }
 
-resource "kubernetes_manifest" "my_website_app" {
+resource "kubernetes_manifest" "portfolio_app" {
   manifest = {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind"       = "Application"
     "metadata" = {
-      "name"      = "my-website"
+      "name"      = "portfolio"
       "namespace" = "argocd"
     }
     "spec" = {
@@ -43,11 +43,11 @@ resource "kubernetes_manifest" "my_website_app" {
       "source" = {
         "repoURL"        = "https://github.com/belchiorg/belchiorg-gitops.git"
         "targetRevision" = "HEAD"
-        "path"           = "apps/my-website"
+        "path"           = "apps/portfolio"
       }
       "destination" = {
         "server"    = "https://kubernetes.default.svc"
-        "namespace" = "default"
+        "namespace" = "portfolio"
       }
       "syncPolicy" = {
         "automated" = {
