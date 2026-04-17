@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: portfolio
-          image: ghcr.io/belchiorg/portfolio:sha-a5c9d342f242ac52edb2fbeb371852350f347d65
+          image: ghcr.io/belchiorg/portfolio:sha-b31f04d25aaa065893cc1afd597a578a733f85bb
           ports:
             - containerPort: 80
           resources:
